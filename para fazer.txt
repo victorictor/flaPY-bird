@@ -1,0 +1,11 @@
+//usar convert nas img
+//fazer sistema de colisao por rect
+//fazer sistema de animação
+//fazer fundo 
+//fazer sistema de cenas
+fazer tela de titulo
+fazer tela de morte
+fazer sistema de pontos 
+fazer game feel no bird
+
+(fazer depois de ter o jogo base) ajustar emplementar sistema de peso
