@@ -1,4 +1,4 @@
-import pygame as pg
+from pygame import draw 
 from random import randint, uniform
 
 class PARTICLES:
@@ -65,10 +65,11 @@ class PARTICLES:
                 part_stats = [pos, self.raio, Dir, 'cair', 0.1, (251, 251, 251)]
                 self.partula_lista.append(part_stats)
             self.morreu = False
+    
     def deletar(self):
         self.partula_lista = [p for p in self.partula_lista if p[1] > 0]
 
-    def draw(self, tela):        
+    def draw(self, tela):
         for p in self.partula_lista:
             if p[1] <= 7 and p[5] == (251, 251, 251):
                 p[5] = (172, 185, 251)
@@ -77,7 +78,12 @@ class PARTICLES:
             p[0][1] -= p[2][1]
             p[1] -= p[4]
 
-            pg.draw.circle(tela, p[5], p[0], int(p[1]))
+            draw.circle(tela, p[5], p[0], int(p[1]))
+
+    def upgrade_stats(self):
+        self.dir_x += 0.3
+        self.q_sangue += 1
+        self.q_cair += 1
 
     def update(self, tela):
         self.draw(tela)
