@@ -33,4 +33,31 @@ class BG:
         self.create_list()
         self.move(dt)
         self.draw(tela)
+
+class GROUND:
+    def __init__(self):
+        surf = pg.transform.scale_by(pg.image.load('data/img/ground.png').convert_alpha(), 4)
+        self.w = surf.get_width()
+
+        self.ground_lista = []
+        for n in range(2):
+            pos = [0, 500]
+            if n == 1:
+                pos[0] = 800
+            self.ground_lista.append([surf, pos])
+        self.vel = 160
+
+    def move(self, dt):
+        for n in self.ground_lista:
+            n[1][0] -= self.vel * dt
+            
+            if n[1][0] + self.w <= 0:
+                n[1][0] = 800
+
+    def draw(self, tela):
+        tela.blits(self.ground_lista)
+        
+    def update(self, tela, dt):
+        self.move(dt)
+        self.draw(tela)
         
