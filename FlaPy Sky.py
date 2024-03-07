@@ -1,32 +1,22 @@
 import pygame as pg
 from sys import exit  
+pg.init()
+
+from settings import tela, clock, debug_fps
 
 from data.scripts.player import BIRD
 from data.scripts.cenario import CANO, BG, GROUND
 from data.scripts.hud import TITLE, BARRA, PONTOS
 from data.scripts.particulas import PARTICLES
-pg.init()
-
-tela = pg.display.set_mode((800, 600)) 
-clock = pg.time.Clock()
-G = 9.807
 
 bg = BG()
 ch = GROUND()
 cano = CANO() 
-
 bird = BIRD()  
-
 titulo = TITLE()
 pontos = PONTOS()
 barra = BARRA()
-
 part = PARTICLES()
-
-font = pg.font.SysFont(None, 30)
-def debug_fps(tela, fps):
-    fps = font.render(str(fps), False, 'black')
-    tela.blit(fps, (10,10))
 
 class JOGO:
     def __init__(self):
@@ -50,7 +40,7 @@ class JOGO:
                             bird.apertou_space = True
                             self.cena_atual = 'game'
 
-        self.Update_Events(dt)
+        self.UpdateEvents(dt)
         pg.display.flip()
         clock.tick()
     def Game(self): 
@@ -66,11 +56,11 @@ class JOGO:
                     bird.pulo()
                     part.pulo(bird.pos)
 
-        self.Collision_Events(dt)
-        self.Update_Events(dt)
+        self.CollisionEvents(dt)
+        self.UpdateEvents(dt)
         pg.display.flip()
         clock.tick()
-    def Game_over(self):
+    def GameOver(self):
         tela.fill((63, 93, 251))
         dt = clock.tick(144)/1000.0
 
@@ -105,11 +95,11 @@ class JOGO:
                         
                         barra.estado = 'gameplay'
 
-        self.Update_Events(dt)
-        self.Collision_Events(dt)
+        self.UpdateEvents(dt)
+        self.CollisionEvents(dt)
         pg.display.flip()
 
-    def Update_Events(self, dt):
+    def UpdateEvents(self, dt):
         if self.cena_atual == 'intro':#---------INTRO
             bg.update(tela, dt)
             ch.update(tela, dt)
@@ -146,7 +136,7 @@ class JOGO:
             pontos.update(tela, dt)
             barra.update(tela, dt)
     
-    def Collision_Events(self, dt):
+    def CollisionEvents(self, dt):
         if self.cena_atual == 'game':#---------GAME
             if bird.bateu:
                 bird.estado = 'game over'
@@ -210,7 +200,7 @@ class JOGO:
                         obj.vel -= 0.4
                     bird.estado = 'game over'
 
-    def gerenciador_cenas(self):
+    def GerenciadorCenas(self):
         if self.cena_atual == 'intro':
             self.Intro()
 
@@ -220,12 +210,12 @@ class JOGO:
 
         if self.cena_atual == 'game over':
             clock.tick()
-            self.Game_over()
+            self.GameOver()
 
 jogo = JOGO()
 gameloop = True
 while gameloop:
-    jogo.gerenciador_cenas()
+    jogo.GerenciadorCenas()
     gameloop = jogo.gameloop
 pg.quit()
 exit()
